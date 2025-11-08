@@ -1,11 +1,197 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { FormSection } from "@/components/FormSection";
+import { FormField } from "@/components/FormField";
+import { toast } from "sonner";
+import { FileText } from "lucide-react";
 
 const Index = () => {
+  const [applicationType, setApplicationType] = useState("regular");
+  const [isRegisteredVoter, setIsRegisteredVoter] = useState<string>("");
+  const [acknowledged, setAcknowledged] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!acknowledged) {
+      toast.error("Please acknowledge the terms before submitting");
+      return;
+    }
+    toast.success("Application submitted successfully!");
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        <Card className="shadow-lg">
+          <CardHeader className="bg-primary text-primary-foreground py-6">
+            <div className="flex items-center gap-4">
+              <FileText className="w-10 h-10" />
+              <div>
+                <h1 className="text-2xl font-bold">Barangay Clearance/Certificate</h1>
+                <p className="text-sm text-primary-foreground/90">Application Form</p>
+              </div>
+            </div>
+          </CardHeader>
+
+          <CardContent className="p-8">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Application Type */}
+              <FormSection title="Application Type">
+                <RadioGroup value={applicationType} onValueChange={setApplicationType}>
+                  <div className="flex items-center space-x-6">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="regular" id="regular" />
+                      <Label htmlFor="regular" className="cursor-pointer">Regular</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="building" id="building" />
+                      <Label htmlFor="building" className="cursor-pointer">Building</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="business" id="business" />
+                      <Label htmlFor="business" className="cursor-pointer">Business</Label>
+                    </div>
+                  </div>
+                </RadioGroup>
+                <div className="flex items-center space-x-6 mt-4">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="new" />
+                    <Label htmlFor="new" className="cursor-pointer">New</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="renewal" />
+                    <Label htmlFor="renewal" className="cursor-pointer">Renewal</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="certificate" />
+                    <Label htmlFor="certificate" className="cursor-pointer">Certificate</Label>
+                  </div>
+                </div>
+              </FormSection>
+
+              {/* Personal Information */}
+              <FormSection title="Personal Information">
+                <FormField label="Name" id="name" required placeholder="Enter full name" />
+                <FormField label="Authorized Person" id="authorizedPerson" placeholder="If applicable" />
+                <FormField label="Address" id="address" required placeholder="Complete address" />
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField label="Date of Birth" id="dateOfBirth" type="date" required />
+                  <FormField label="Place of Birth" id="placeOfBirth" required placeholder="City/Municipality" />
+                </div>
+              </FormSection>
+
+              {/* Residency Information */}
+              <FormSection title="Residency Information">
+                <FormField 
+                  label="Period of Residency in West Rembo" 
+                  id="residencyPeriod" 
+                  required 
+                  placeholder="e.g., 5 years"
+                />
+                
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-form-label">
+                    Registered Voter of West Rembo? <span className="text-destructive">*</span>
+                  </Label>
+                  <RadioGroup value={isRegisteredVoter} onValueChange={setIsRegisteredVoter}>
+                    <div className="flex items-center space-x-6">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="voter-yes" />
+                        <Label htmlFor="voter-yes" className="cursor-pointer">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="voter-no" />
+                        <Label htmlFor="voter-no" className="cursor-pointer">No</Label>
+                      </div>
+                    </div>
+                  </RadioGroup>
+                </div>
+              </FormSection>
+
+              {/* House Owner Information */}
+              <FormSection title="House Owner Information">
+                <FormField label="House Owner" id="houseOwner" required placeholder="Name of house owner" />
+                <FormField 
+                  label="Relation to House Owner" 
+                  id="relationToOwner" 
+                  required 
+                  placeholder="e.g., Son, Daughter, Tenant"
+                />
+              </FormSection>
+
+              {/* Purpose and Contact */}
+              <FormSection title="Purpose and Contact Information">
+                <div className="space-y-2">
+                  <Label htmlFor="purpose" className="text-sm font-medium text-form-label">
+                    Purpose <span className="text-destructive">*</span>
+                  </Label>
+                  <Textarea
+                    id="purpose"
+                    name="purpose"
+                    required
+                    placeholder="State the purpose of this application"
+                    className="min-h-[100px] border-form-border focus:ring-primary"
+                  />
+                </div>
+                <FormField 
+                  label="Contact Number" 
+                  id="contactNumber" 
+                  type="tel" 
+                  required 
+                  placeholder="+63 XXX XXX XXXX"
+                />
+              </FormSection>
+
+              {/* Acknowledgment */}
+              <FormSection>
+                <div className="bg-muted p-4 rounded-lg space-y-3">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    I acknowledge that I understand the content of this document, voluntarily signed it, and certify to 
+                    the correctness of the details stated above. I further give my consent to the processing of my personal 
+                    and/or sensitive personal information for barangay clearance and its related purposes as mentioned 
+                    above which may be reported as per National and/or Local Ordinances. I understand and accept that 
+                    this will include access to personal data as provided under the Data Privacy Act of 2012.
+                  </p>
+                  <div className="flex items-start space-x-3">
+                    <Checkbox 
+                      id="acknowledge" 
+                      checked={acknowledged}
+                      onCheckedChange={(checked) => setAcknowledged(checked as boolean)}
+                      className="mt-1"
+                    />
+                    <Label 
+                      htmlFor="acknowledge" 
+                      className="text-sm font-medium cursor-pointer leading-relaxed"
+                    >
+                      I acknowledge and agree to the terms stated above
+                    </Label>
+                  </div>
+                </div>
+              </FormSection>
+
+              {/* Submit Button */}
+              <div className="flex justify-end pt-4">
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="min-w-[200px]"
+                >
+                  Submit Application
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+
+        <p className="text-center text-sm text-muted-foreground mt-6">
+          For inquiries, please contact your local Barangay office
+        </p>
       </div>
     </div>
   );
