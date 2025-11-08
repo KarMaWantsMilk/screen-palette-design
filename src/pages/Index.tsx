@@ -186,6 +186,91 @@ const Index = () => {
                 </Button>
               </div>
             </form>
+
+            {/* Administrative Section - To Be Accomplished by Barangay Personnel */}
+            <div className="mt-8 border-t-2 border-primary pt-6">
+              <h2 className="text-lg font-bold text-center mb-6 uppercase">
+                TO BE ACCOMPLISHED BY BARANGAY PERSONNEL
+              </h2>
+
+              <div className="space-y-6">
+                {/* 1. Screening */}
+                <FormSection title="1. SCREENING">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <FormField label="By" id="screening-by" placeholder="Name" />
+                    <FormField label="Date" id="screening-date" type="date" />
+                    <FormField label="Time" id="screening-time" type="time" />
+                  </div>
+                  <div className="flex items-center space-x-6 mt-2">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="complete-requirements" />
+                      <Label htmlFor="complete-requirements" className="cursor-pointer">
+                        Complete Requirements
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="incomplete" />
+                      <Label htmlFor="incomplete" className="cursor-pointer">Incomplete</Label>
+                    </div>
+                  </div>
+                </FormSection>
+
+                {/* 2. Inspection */}
+                <FormSection title="2. INSPECTION (For building/business clearance)">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField label="By" id="inspection-by" placeholder="Name" />
+                    <FormField label="Date & Time received" id="inspection-datetime" type="datetime-local" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <FormField label="Recommendation" id="recommendation" placeholder="Recommendation" />
+                    <FormField label="Date" id="recommendation-date" type="date" />
+                    <FormField label="Time" id="recommendation-time" type="time" />
+                  </div>
+                  <div className="flex items-center space-x-6 mt-2">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="approved" />
+                      <Label htmlFor="approved" className="cursor-pointer">Approved</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="disapproved" />
+                      <Label htmlFor="disapproved" className="cursor-pointer">Disapproved</Label>
+                    </div>
+                  </div>
+                  <FormField label="Reason (if disapproved)" id="disapproved-reason" placeholder="Enter reason" />
+                  <FormField label="Remarks" id="inspection-remarks" placeholder="Additional remarks" />
+                </FormSection>
+
+                {/* 3. Encoding */}
+                <FormSection title="3. ENCODING">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField label="Encoded by" id="encoded-by" placeholder="Name" />
+                    <FormField label="Brgy. Clearance No." id="clearance-number" placeholder="Clearance number" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField label="Date" id="encoding-date" type="date" />
+                    <FormField label="Time" id="encoding-time" type="time" />
+                  </div>
+                </FormSection>
+
+                {/* 4. Final Approval */}
+                <FormSection title="4. FINAL APPROVAL">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <FormField label="Received by" id="final-received-by" placeholder="Name" />
+                    <FormField label="Date" id="final-date" type="date" />
+                    <FormField label="Time" id="final-time" type="time" />
+                  </div>
+                  <FormField label="Remarks" id="final-remarks" placeholder="Final remarks" />
+                </FormSection>
+
+                {/* 5. Release */}
+                <FormSection title="5. RELEASE">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField label="Received by" id="release-received-by" placeholder="Name" />
+                    <FormField label="Date/Time" id="release-datetime" type="datetime-local" />
+                  </div>
+                </FormSection>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
